@@ -27,5 +27,43 @@ private readonly AppDbContext _context;
     }
     
 
+[HttpPost]
+public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
+{
+    _context.Subjects.Add(subject);
+    
+    await _context.SaveChangesAsync();
+    return Ok(subject);
     
 }
+
+
+[HttpDelete]
+public async Task<ActionResult<Subject>> DeleteSubject (int id)
+{
+
+    var subject = await _context.Subjects.FindAsync(id);
+    if(subject == null)return NotFound();
+    
+    _context.Subjects.Remove(subject);
+    await _context.SaveChangesAsync();
+    return NoContent();
+}
+
+[HttpPut("{id}")]
+public async Task<ActionResult<Subject>> PutSubject(int id, Subject subject){
+
+var existingSubject = await _context.Subjects.FindAsync(id);
+if (existingSubject == null) return NotFound();
+
+existingSubject.Name = subject.Name;
+existingSubject.Duration = subject.Duration;
+existingSubject.Deadline = subject.Deadline;
+existingSubject.Priority = subject.Priority;
+    
+await _context.SaveChangesAsync();
+return Ok(existingSubject);
+}
+    
+}
+
