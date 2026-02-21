@@ -7,8 +7,6 @@ namespace LearningCoachAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-
-
 public class SubjectController: ControllerBase
 {
 private readonly AppDbContext _context;
