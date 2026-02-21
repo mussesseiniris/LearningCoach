@@ -282,6 +282,9 @@ bower_components
 
 *.sublime*
 
+appsettings.json
+appsettings.Development.json
+
 psd
 thumb
 sketch
