@@ -36,7 +36,7 @@ public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
 }
 
 
-[HttpDelete]
+[HttpDelete("{id}")]
 public async Task<ActionResult<Subject>> DeleteSubject (int id)
 {
 
