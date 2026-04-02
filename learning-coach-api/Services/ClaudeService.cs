@@ -1,8 +1,11 @@
 using System;
 using Anthropic;
 using Anthropic.Models.Messages;
-
 namespace LearningCoachAPI.Services;
+
+/// <summary>
+/// Handles the AI connection.
+/// </summary>
 //documentation：ps://platform.claude.com/docs/en/api/sdks/csharp
 public class ClaudeService
 
@@ -15,9 +18,12 @@ public class ClaudeService
         _client = new AnthropicClient() { ApiKey = apiKey } ;
         //AnthropicClient client = new() { ApiKey = apiKey };
        // _client=client;
-
     }
-
+/// <summary>
+/// Sends the user message to Claude API and returns the response.
+/// </summary>
+/// <param name="userMessage"></param>
+/// <returns></returns>
     public async Task<string> AskClaudeAsync(string userMessage)
     {
        // AnthropicClient client = new();

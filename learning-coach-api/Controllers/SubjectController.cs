@@ -2,9 +2,10 @@ using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 namespace LearningCoachAPI.Controllers;
-
+/// <summary>
+/// Handles Subjects CRUD.
+/// </summary>
 [ApiController]
 [Route("api/[controller]")]
 public class SubjectController: ControllerBase
@@ -16,7 +17,10 @@ private readonly AppDbContext _context;
         _context=context;
         
     }
-    
+    /// <summary>
+    /// Gets a list of subjects from the database.
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<List<Subject>>> GetSubjects()
     {
@@ -24,7 +28,11 @@ private readonly AppDbContext _context;
         return subjects;
     }
     
-
+/// <summary>
+///Add a new subject to the database.
+/// </summary>
+/// <param name="subject"></param>
+/// <returns></returns>
 [HttpPost]
 public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
 {
@@ -35,7 +43,11 @@ public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
     
 }
 
-
+/// <summary>
+/// Delete a subject from the database.
+/// </summary>
+/// <param name="id"></param>
+/// <returns></returns>
 [HttpDelete("{id}")]
 public async Task<ActionResult<Subject>> DeleteSubject (int id)
 {
@@ -47,7 +59,12 @@ public async Task<ActionResult<Subject>> DeleteSubject (int id)
     await _context.SaveChangesAsync();
     return NoContent();
 }
-
+/// <summary>
+/// Update the subject existing in the database by ID.
+/// </summary>
+/// <param name="id"></param>
+/// <param name="subject"></param>
+/// <returns></returns>
 [HttpPut("{id}")]
 public async Task<ActionResult<Subject>> PutSubject(int id, Subject subject){
 
