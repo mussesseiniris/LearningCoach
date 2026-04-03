@@ -36,4 +36,7 @@ public class AIController : ControllerBase
         var claudeResponse = await _claudeService.AskClaudeAsync(userMessage,systemPrompt);
         return Ok(claudeResponse);
     }
+    
+    
+    
 }
