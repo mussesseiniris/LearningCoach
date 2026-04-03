@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+:root {
+  --bg-color: #1A1A1A;
+  --primary: #ad0d22;
+  --accent: #39FF14;
+  --text: #FFFFFF;
+  --bubble-user: #6A0DAD;
+  --bubble-ai: #2A2A2A;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
