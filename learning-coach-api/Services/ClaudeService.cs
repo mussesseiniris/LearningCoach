@@ -24,25 +24,29 @@ public class ClaudeService
 /// </summary>
 /// <param name="userMessage"></param>
 /// <returns></returns>
-    public async Task<string> AskClaudeAsync(string userMessage)
+    public async Task<string> AskClaudeAsync(string userMessage,String systemPrompt)
     {
        // AnthropicClient client = new();
 
         MessageCreateParams parameters = new()
         {
-            MaxTokens = 1024,
+            MaxTokens = 1024, 
+            // System = new List<SystemPrompt> { new() { Text = systemPrompt } },
+            System =  systemPrompt,
             Messages =
             [
                 new()
                 {
                     Role = Role.User,
                     Content = userMessage,
+                    
                 },
             ],
             Model = "claude-opus-4-6",
         };
 
         var message = await _client.Messages.Create(parameters);
+        
         
       return message.Content[0].Json.GetProperty("text").GetString() ?? "No response";
     }
