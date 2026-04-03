@@ -15,5 +15,7 @@ public class Subject
     public int Priority{get;set;}
     
     public int UserId{get;set;}
-    
+
+    public string Goal {get;set;}
+
 }
