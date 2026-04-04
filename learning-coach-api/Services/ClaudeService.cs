@@ -1,6 +1,8 @@
 using System;
 using Anthropic;
 using Anthropic.Models.Messages;
+using LearningCoachAPI.Models;
+
 namespace LearningCoachAPI.Services;
 
 /// <summary>
@@ -24,9 +26,15 @@ public class ClaudeService
 /// </summary>
 /// <param name="userMessage"></param>
 /// <returns></returns>
-    public async Task<string> AskClaudeAsync(string userMessage,String systemPrompt)
+    public async Task<string> AskClaudeAsync(List<ChatMessage> chatMessages,string newMessage,string systemPrompt)
     {
        // AnthropicClient client = new();
+       var historyMessages = chatMessages.Select(m => new MessageParam
+       {
+          Role = m.MessageRole=="user"?Role.User:Role.Assistant,
+          Content=m.MessageContent,
+       });
+       
 
         MessageCreateParams parameters = new()
         {
@@ -34,15 +42,14 @@ public class ClaudeService
             // System = new List<SystemPrompt> { new() { Text = systemPrompt } },
             System =  systemPrompt,
             Messages =
-            [
-                new()
+                historyMessages.Append(new()
                 {
                     Role = Role.User,
-                    Content = userMessage,
-                    
-                },
-            ],
-            Model = "claude-opus-4-6",
+                    Content = newMessage,
+                }).ToList(),
+            
+            Model = "claude-sonnet-4-6",
+            // "claude-opus-4-6",
         };
 
         var message = await _client.Messages.Create(parameters);

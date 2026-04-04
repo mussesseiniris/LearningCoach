@@ -15,6 +15,8 @@ namespace LearningCoachAPI.Data;
             
             public DbSet<LearningSession> LearningSessions{get;set;}
             
+            public DbSet<ChatMessage> ChatMessages{get;set;}
+            
 
         
 }
