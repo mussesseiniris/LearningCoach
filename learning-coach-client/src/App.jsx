@@ -3,6 +3,7 @@ import './App.css'
 import ReactMarkdown from "react-markdown"
 import book from "./assets/book1.png";
 import CreateSubject from './components/CreateSubject';
+import ShowSubjects from './components/ShowSubjects';
 
 function App() {
   const [message, setMessage] = useState("");
@@ -11,6 +12,7 @@ function App() {
   const [status,setStatus]=useState("");
   const [showCreateSub,setShowCreateSub]=useState(false);
   const [showLS,setShowLS]=useState(false);
+  const [showShowSub,setShowShowSub]=useState(false);
 
 
   async function handleSend(){
@@ -46,10 +48,12 @@ function App() {
     <div className='HomePage'>
       <div className='menu'>
       <button onClick={()=>setShowCreateSub(!showCreateSub)}>+Create new Subject</button>
+      <button onClick={()=>setShowShowSub(!showShowSub)}>Show subjects</button>
       <button onClick={()=>setShowLS(!showLS)}>+Learning session</button>
       
      </div>
         {showCreateSub&&<CreateSubject/>}
+        {showShowSub && <ShowSubjects/>}
     <div className="app">
   <div className='title'>
     <h1>Learning Coach</h1>
