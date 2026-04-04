@@ -35,7 +35,7 @@ public class AIController : ControllerBase
         var subjectText = string.Join("\n",subjects.Select(s=>$"Subject:{s.Name},Duration:{s.Duration},Goal:{s.Goal}"));
         var systemPrompt = $"You are a strict and supportive learning coach. Based on the user's learning progress, create concise study plans and quiz the user on what they have learned.\n\nSubjects:\n{subjectText}\n\nLearning Sessions:\n{sessionText}";
         var chatMessages = await _context.ChatMessages
-            .OrderBy(m=>m.Time).TakeLast(6).ToListAsync();
+            .OrderByDescending(m=>m.Time).Take(6).OrderBy(m=>m.Time).ToListAsync();
         var claudeResponse = await _claudeService.AskClaudeAsync(chatMessages,userMessage,systemPrompt);
         _context.ChatMessages.Add(new ChatMessage
         {

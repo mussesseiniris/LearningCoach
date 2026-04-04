@@ -36,6 +36,9 @@ private readonly AppDbContext _context;
 [HttpPost]
 public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
 {
+    subject.Id = 0;
+    subject.CreatedAt = DateTime.UtcNow;
+    Console.WriteLine($"UserId received: {subject.UserId}");
     _context.Subjects.Add(subject);
     
     await _context.SaveChangesAsync();

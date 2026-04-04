@@ -3,9 +3,10 @@
     font-family: 'dotFont';
     src: url(./assets/dover-thyssenkrupp-impulse.otf.woff2);
 }
-.app {
+
+.HomePage {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
   max-width: 100%;
   max-height: 100%;
@@ -13,6 +14,49 @@
   padding: 10px;
   margin: 10px 50px;
   overflow: hidden;
+}
+
+.menu{
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 100%;
+  background-color: rgb(181, 20, 20);
+}
+
+.menu button{
+  margin-top: 40px;
+  background-color:rgb(244, 159, 12);
+  /* padding: 10px 5px; */
+  width: 150px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.CreateSubject{
+  display: flex;
+  width: 250px;
+  background-color: rgb(181, 20, 20);
+  /* align-items: center; */
+  align-items: center;
+  flex-direction: column;
+
+}
+
+
+.app {
+  display: flex; 
+  flex-direction: column; 
+  height: 100vh;
+  flex:1;
+  /* max-width: 100%;
+  max-height: 100%; */
+  margin: 0 auto;
+  padding: 10px;
+  margin: 10px 50px;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .title {

@@ -2,12 +2,16 @@ import { useState } from 'react'
 import './App.css'
 import ReactMarkdown from "react-markdown"
 import book from "./assets/book1.png";
+import CreateSubject from './components/CreateSubject';
 
 function App() {
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const[chatHistory,setChatHistory]=useState([]);
   const [status,setStatus]=useState("");
+  const [showCreateSub,setShowCreateSub]=useState(false);
+  const [showLS,setShowLS]=useState(false);
+
 
   async function handleSend(){
     if(!message){
@@ -39,6 +43,13 @@ function App() {
   
   
   return (
+    <div className='HomePage'>
+      <div className='menu'>
+      <button onClick={()=>setShowCreateSub(!showCreateSub)}>+Create new Subject</button>
+      <button onClick={()=>setShowLS(!showLS)}>+Learning session</button>
+      
+     </div>
+        {showCreateSub&&<CreateSubject/>}
     <div className="app">
   <div className='title'>
     <h1>Learning Coach</h1>
@@ -57,6 +68,7 @@ function App() {
       <textarea type="text" value={message} onChange={(e)=>setMessage(e.target.value)} placeholder='Asking your learning coach' />
    <button onClick={handleSend}>Send</button>
      
+   </div>
    </div>
    </div>
   )
