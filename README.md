@@ -30,7 +30,7 @@ docker run --name learningcoach-db -e POSTGRES_PASSWORD=yourpassword -p 5433:543
 ### 2. Backend
 
 ```bash
-cd LearningCoachAPI
+cd learning-coach-api
 dotnet ef database update
 dotnet run
 ```
@@ -40,7 +40,7 @@ The API runs at `http://localhost:5138`.
 ### 3. Frontend
 
 ```bash
-cd frontend
+cd learning-coach-client
 npm install
 npm run dev
 ```
@@ -72,7 +72,3 @@ Add your Anthropic API key to `appsettings.json` (not committed to Git):
 - **AI Chat** — Context-aware conversations about your learning
 - **Chat History** — Multi-turn conversations persisted in the database
 - **Markdown Rendering** — AI responses rendered with full markdown support
-
-## License
-
-This project is for educational purposes.
