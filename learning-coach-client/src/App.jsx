@@ -4,6 +4,8 @@ import ReactMarkdown from "react-markdown"
 import book from "./assets/book1.png";
 import CreateSubject from './components/CreateSubject';
 import ShowSubjects from './components/ShowSubjects';
+import CreateLearningSessions from './components/CreateLearningSessions';
+import ShowLS from './components/ShowLS';
 
 function App() {
   const [message, setMessage] = useState("");
@@ -11,8 +13,11 @@ function App() {
   const[chatHistory,setChatHistory]=useState([]);
   const [status,setStatus]=useState("");
   const [showCreateSub,setShowCreateSub]=useState(false);
-  const [showLS,setShowLS]=useState(false);
   const [showShowSub,setShowShowSub]=useState(false);
+  const [showCreateLS,setShowCreateLS] = useState(false);
+  const [showLS,setShowLS]=useState(false);
+  
+  
 
 
   async function handleSend(){
@@ -49,11 +54,15 @@ function App() {
       <div className='menu'>
       <button onClick={()=>setShowCreateSub(!showCreateSub)}>+Create new Subject</button>
       <button onClick={()=>setShowShowSub(!showShowSub)}>Show subjects</button>
-      <button onClick={()=>setShowLS(!showLS)}>+Learning session</button>
+      <button onClick={()=>setShowCreateLS(!showCreateLS)}>+Learning session</button>
+      <button onClick={()=>setShowLS(!showLS)}>Show Learning session</button>
       
      </div>
         {showCreateSub&&<CreateSubject/>}
         {showShowSub && <ShowSubjects/>}
+        {showCreateLS&&<CreateLearningSessions/>}
+        {showLS && <ShowLS/>}
+
     <div className="app">
   <div className='title'>
     <h1>Learning Coach</h1>

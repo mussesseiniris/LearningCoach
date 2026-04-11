@@ -1,0 +1,49 @@
+
+
+.CreateLearningSessions{
+  display: flex;
+  width: 250px;
+  background-color: var(--primary);
+  /* align-items: center; */
+  align-items: center;
+  flex-direction: column;
+
+}
+.CreateLearningSessions button{
+margin-top: 10px;
+margin-bottom: 20px;
+background-color: rgb(244, 159, 12);
+width: 80%;
+height: 5%;
+border-radius: 8px;
+
+}
+.CreateLearningSessions input{
+    width: 80%;
+    /* background-color:rgba(255, 255, 255, 0.1);  */
+}
+#Note{
+   color: var(--text2);
+   background-color:rgba(255, 255, 255, 0.3); 
+   width: 80%;
+}
+
+.section-title
+{
+font-family:'dotFont';
+margin-top: 40px;
+color: var(--accent);
+width: 100%;
+white-space: nowrap;
+text-align: center;
+font-weight: 900;
+}
+
+.card{
+    background-color:rgba(129, 9, 125, 0.15); 
+    padding:0 10px 20px 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px;
+    width: 80%;
+}

@@ -1,0 +1,49 @@
+.ShowLearningSessions{
+  display: flex;
+  width: 250px;
+  background-color:var(--primary);
+  /* align-items: center; */
+  align-items: center;
+  flex-direction: column;
+
+}
+.ShowLearningSessions button{
+margin-top: 10px;
+margin-bottom: 20px;
+background-color: var(--accent);
+width: 80%;
+height: 5%;
+border-radius: 8px;
+
+}
+.ShowLearningSessions input{
+    width: 80%;
+}
+
+.ShowLearningSessions select{
+    width: 80%;
+    margin-bottom: 10px;
+}
+
+.ls-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px 24px;
+    /* margin-bottom: 16px; */
+    margin: 10px;
+}
+
+.section-title
+{
+font-family:'dotFont';
+margin-top: 40px;
+color: var(--accent);
+}
+
+.hint{
+    color: rgb(255, 255, 255);
+}
+.ShowLearningSessions p{
+    color: var(--text2);
+    font-size: small;
+}

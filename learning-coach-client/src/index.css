@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 :root {
-  --bg-color: #1A1A1A;
-  --primary: #ad0d22;
-  --accent: #f8b123;
+  --bg-color: #f7ecfa;
+  --primary: #f0c7ee;
+  --accent: rgba(248, 177, 35, 0.85);
   --text: #FFFFFF;
+  --text2:#626060;
   --bubble-user: #6A0DAD;
-  --bubble-ai: #2A2A2A;
+  --bubble-ai: #f69ff3;
 }
 
 body {
-  background-color: var(--bg-color);
+  /* background-color: var(--bg-color); */
+  background: linear-gradient(180deg, #f7ecfa, #a0c4ff);
   color: var(--text);
   font-family: sans-serif;
   margin: 0;

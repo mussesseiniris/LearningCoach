@@ -18,13 +18,14 @@ public class LearningSessionController : ControllerBase
         _context = context;
     }
 /// <summary>
-/// Gets a list of learning sessions from the database
+/// Gets a list of learning sessions from the database based on the subjectId
 /// </summary>
 /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<List<LearningSession>>> GetLearningSession()
+    public async Task<ActionResult<List<LearningSession>>> GetLearningSession(int? subjectId)
     {
-        var LearningSessions = await _context.LearningSessions.ToListAsync();
+        // var LearningSessions = await _context.LearningSessions.ToListAsync();
+        var LearningSessions = await _context.LearningSessions.Where(ls => ls.SubjectId == subjectId).ToListAsync();
         return LearningSessions;
     }
 

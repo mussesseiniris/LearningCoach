@@ -42,18 +42,21 @@ if(result.ok){
   }
 
   return(<div className='CreateSubject'>
-    <h3>Create a new Subject</h3>
+    <h3 className="section-title">New Subject</h3>
         {/* <h3>Subject</h3> */}
         <input type="text" placeholder='e.g. English' value={subject} onChange={(e)=>setSubject(e.target.value)} />
-     
-        <h3>Goal</h3>
-        <textarea type="text" value={goal} onChange={(e)=>setGoal(e.target.value)} />
-        <h3>Deadline</h3>
-        <input className="deadline" type="date" value={deadline} onChange={(e)=>setDeadline(e.target.value)} />
+     <div className="card">
+        <p>Goal</p>
+        <textarea type="text" value={goal} onChange={(e)=>setGoal(e.target.value)} /></div>
+        <div className="card">
+        <p>Deadline</p>
+        <input className="deadline" type="date" value={deadline} onChange={(e)=>setDeadline(e.target.value)} /></div>
+        <div className="card">
         <p>Duration</p>
-        <input type="text" value={duration} onChange={(e)=>setDuration(e.target.value)}/>
+        <input type="text" value={duration} onChange={(e)=>setDuration(e.target.value)}/></div>
+         <div className="card">
          <p>Priority</p>
-         <input type="text" value={priority} onChange={(e)=>setPriority(e.target.value)} />
+         <input type="text" value={priority} onChange={(e)=>setPriority(e.target.value)} /></div>
         <button onClick={handleCreateSubject}>Create</button>
         
         

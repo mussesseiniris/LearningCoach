@@ -1,5 +1,5 @@
 import { useState,useEffect} from 'react';
-import './ShowSubjects.css'
+import './CreateSubject.css'
 
 
 function ShowSubjects(){
@@ -20,12 +20,13 @@ function ShowSubjects(){
 
     return(
         <div className='ShowSubjects'>
-<h3>Subjects</h3>
+<h3 className='section-title'>Subjects</h3>
 {subjects.map((subject,index)=>(<div key={subject.Id} className="subject-card">
     <h3>{index+1}.Subject:{subject.name}</h3>
-    <p>Goal:{subject.goal}</p>
+    <p>◉ Goal:{subject.goal}</p>
     {/* <p>{subject.deadline}</p> */}
-    <p>Deadline:{new Date(subject.deadline).toLocaleDateString()}</p>
+    <p>◉ Start time:{new Date(subject.createdAt).toLocaleDateString()}</p>
+    <p>◉ Deadline:{new Date(subject.deadline).toLocaleDateString()}</p>
     
 </div>))}
 
