@@ -12,31 +12,44 @@ function CreateLearningSessions() {
   //Fetch all subjects once on mount.
   useEffect(() => {
     async function fetchSubjects() {
-      const res = await fetch("http://localhost:5138/api/Subject");
-      const data = await res.json();
-      setSubjects(data);
+      try {
+        const res = await fetch("http://localhost:5138/api/Subject");
+
+        const data = await res.json();
+
+        setSubjects(data);
+      } catch (error) {
+        console.error(error);
+      }
     }
     fetchSubjects();
   }, []);
 
   //Calculate duration and post new learning session to the backend.
   async function handleCreateLS() {
+       if (!subjectId || !startTime || !endTime || !note) {
+      alert("Please fill in all required fields!");
+      return;
+    }
     const duration = (new Date(endTime) - new Date(startTime)) / 60000;
-
-    const result = await fetch("http://localhost:5138/api/LearningSession", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        UserId: 1,
-        StartTime: startTime + ":00Z",
-        EndTime: endTime + ":00Z",
-        Duration: duration,
-        subjectId: subjectId,
-        Note: note,
-      }),
-    });
-    if (result.ok) {
-      alert("Learning Session created!");
+    try {
+      const result = await fetch("http://localhost:5138/api/LearningSession", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          UserId: 1,
+          StartTime: startTime + ":00Z",
+          EndTime: endTime + ":00Z",
+          Duration: duration,
+          subjectId: subjectId,
+          Note: note,
+        }),
+      });
+      if (result.ok) {
+        alert("Learning Session created!");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -48,8 +61,8 @@ function CreateLearningSessions() {
       </div>
 
       <div className="card">
-        <h3>Subject</h3>
-        
+        <p>Subject</p>
+
         {/* Dropdown to select a subject. */}
         <select
           value={subjectId}
@@ -63,10 +76,10 @@ function CreateLearningSessions() {
           ))}
         </select>
       </div>
-      
+
       {/* Enter needed content */}
       <div className="card">
-        <h3>Start time</h3>
+        <p>Start time</p>
         <input
           type="datetime-local"
           value={startTime}
@@ -75,7 +88,7 @@ function CreateLearningSessions() {
       </div>
 
       <div className="card">
-        <h3>End time</h3>
+        <p>End time</p>
         <input
           type="datetime-local"
           value={endTime}
@@ -84,8 +97,7 @@ function CreateLearningSessions() {
       </div>
 
       <div className="card">
-        {" "}
-        <h3>Note</h3>
+        <p>Note</p>
         <textarea
           id="Note"
           value={note}
