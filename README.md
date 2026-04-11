@@ -6,6 +6,17 @@ An AI-powered learning assistant that helps you plan, track, and reflect on your
 
 LearningCoach lets you manage subjects and learning sessions, then chat with an AI coach (powered by Claude) that understands your study context — what you're learning, your goals, and your progress. Conversations are persisted so you can pick up where you left off.
 
+## Screenshots
+
+### Home & AI Chat
+![Home](screenshots/home.png)
+
+### Learning Sessions
+![Learning Sessions](screenshots/learning-sessions.png)
+
+### AI Chat in Action
+![AI Chat](screenshots/chat.png)
+
 ## Tech Stack
 
 **Backend:** ASP.NET Core Web API, Entity Framework Core, PostgreSQL  
