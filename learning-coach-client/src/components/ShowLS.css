@@ -37,7 +37,7 @@ border-radius: 8px;
 {
 font-family:'dotFont';
 margin-top: 40px;
-color: var(--accent);
+color: rgb(52, 101, 157);
 }
 
 .hint{
@@ -46,4 +46,8 @@ color: var(--accent);
 .ShowLearningSessions p{
     color: var(--text2);
     font-size: small;
+}
+
+#lsTitle{
+    color: rgb(52, 101, 157);
 }

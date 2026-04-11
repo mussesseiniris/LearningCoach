@@ -89,14 +89,14 @@ margin: auto;
 
 textarea {
   flex: 1;
-  background-color:(#f0c7ee,0.1);
-  color: var(--text);
+  color: var(--text2);
   border: 1px solid var(--primary);
   border-radius: 8px;
   padding: 10px;
   resize: none;
   height: 60px;
   font-size: 16px;
+  background-color: rgba(255, 255, 255, 0.3); 
 }
 
 button {
