@@ -2,26 +2,7 @@ import { useState, useEffect } from "react";
 import "./CreateSubject.css";
 
 //Displays subjects.
-function ShowSubjects() {
-  const [subjects, setSubjects] = useState([]);
-  
-  //Fetch all subjects once on mount.
-  useEffect(() => {
-    async function handleGetSubjects() {
-      try {
-        var result = await fetch("http://localhost:5138/api/Subject", {
-          method: "Get",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        var data = await result.json();
-        setSubjects(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    handleGetSubjects();
-  }, []);
+function ShowSubjects({subjects}) {
 
   return (
     <div className="ShowSubjects">

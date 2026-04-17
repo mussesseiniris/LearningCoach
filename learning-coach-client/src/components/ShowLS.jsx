@@ -50,7 +50,7 @@ function ShowLS() {
   return (
     <div className="ShowLearningSessions">
       <div className="section-title">
-        <h3>Lerning Sessions</h3>
+        <h3>Learning Sessions</h3>
       </div>
       <h3>Select a subject:</h3>
 
