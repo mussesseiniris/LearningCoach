@@ -1,5 +1,6 @@
 using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace LearningCoachAPI.Controllers;
@@ -7,6 +8,7 @@ namespace LearningCoachAPI.Controllers;
 /// <summary>
 /// Handles learning sessions CRUD-Create, Read, Update, Delete.
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class LearningSessionController : ControllerBase

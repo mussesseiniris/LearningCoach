@@ -22,6 +22,9 @@ function App() {
   const [subjects, setSubjects] = useState([]);
   const [learningSessions, setLs] = useState([]);
 
+  const now = new Date();
+  const currentTime = now.toLocaleString();
+
   //Fetch all subjects once on mount.
 
   async function handleGetSubjects() {
@@ -48,7 +51,7 @@ function App() {
       return;
     }
     setStatus("Sending...");
-    const userMessage = { role: "User", content: textTosend };
+    const userMessage = { role: "User: ", content: textTosend };
     setChatHistory((prev) => [...prev, userMessage]);
 
     try {
@@ -64,7 +67,7 @@ function App() {
       setResponse(data);
       setStatus("success sent");
       setMessage("");
-      const AIMessage = { role: "Learning Coach", content: data };
+      const AIMessage = { role: "Learning Coach: ", content: data };
       setChatHistory((prev) => [...prev, AIMessage]);
     } catch (error) {
       console.error("Error in handleSend:", error);
@@ -108,6 +111,7 @@ function App() {
             chatHistory.map((message, i) => (
               <div key={i}>
                 <strong>{message.role}</strong>
+                <p>{currentTime}</p>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {message.content}
                 </ReactMarkdown>
@@ -124,7 +128,7 @@ function App() {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Asking your learning coach"
           />
-          <button onClick={handleSend}>Send</button>
+          <button onClick={()=>handleSend()}>Send</button>
         </div>
       </div>
     </div>

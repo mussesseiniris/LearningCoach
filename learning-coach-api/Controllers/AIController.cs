@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
 using LearningCoachAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +11,7 @@ namespace LearningCoachAPI.Controllers;
 /// <summary>
 /// Handles AI requests, using ClaudeService to integrate with Claude API
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AIController : ControllerBase
@@ -37,12 +40,13 @@ public class AIController : ControllerBase
         var chatMessages = await _context.ChatMessages
             .OrderByDescending(m=>m.Time).Take(6).OrderBy(m=>m.Time).ToListAsync();
         var claudeResponse = await _claudeService.AskClaudeAsync(chatMessages,userMessage,systemPrompt);
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         _context.ChatMessages.Add(new ChatMessage
         {
            MessageRole = "user",
            MessageContent =userMessage,
            Time = DateTime.UtcNow,
-           UserID = 1,
+           UserID = userId,
         });
         
         _context.ChatMessages.Add(new ChatMessage
@@ -50,7 +54,7 @@ public class AIController : ControllerBase
             MessageRole = "assistant",
             MessageContent =claudeResponse,
             Time = DateTime.UtcNow,
-            UserID = 1,
+            UserID = userId,
         });
         await _context.SaveChangesAsync();
         return Ok(claudeResponse);

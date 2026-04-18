@@ -1,5 +1,6 @@
 using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +8,7 @@ namespace LearningCoachAPI.Controllers;
 /// <summary>
 /// Handles user data CRUD operations.
 /// </summary>
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class UserController : ControllerBase

@@ -1,11 +1,15 @@
+using System.Security.Claims;
 using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace LearningCoachAPI.Controllers;
 /// <summary>
 /// Handles Subjects CRUD.
 /// </summary>
+///
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class SubjectController: ControllerBase
@@ -36,6 +40,7 @@ private readonly AppDbContext _context;
 [HttpPost]
 public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
 {
+    var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     subject.Id = 0;
     subject.CreatedAt = DateTime.UtcNow;
     Console.WriteLine($"UserId received: {subject.UserId}");
