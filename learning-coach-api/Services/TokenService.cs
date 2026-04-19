@@ -25,10 +25,12 @@ public class TokenService
     public string GenerateToken(User user)
     {
         // Pack user info into token claims
+       
         var claims = new[]
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.Name)
         };
         
         // Build signing key from config secret
