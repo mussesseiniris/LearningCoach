@@ -61,7 +61,7 @@ function App() {
       return;
     }
     setStatus("Sending...");
-    const userMessage = { role: "User: ", content: textTosend };
+    const userMessage = { role: "User: ", content: textTosend,time: new Date().toLocaleString() };
     setChatHistory((prev) => [...prev, userMessage]);
 
     try {
@@ -78,7 +78,7 @@ function App() {
       setResponse(data);
       setStatus("success sent");
       setMessage("");
-      const AIMessage = { role: "Learning Coach: ", content: data };
+      const AIMessage = { role: "Learning Coach: ", content: data, time: new Date().toLocaleString() };
       setChatHistory((prev) => [...prev, AIMessage]);
     } catch (error) {
       console.error("Error in handleSend:", error);
@@ -131,7 +131,7 @@ function App() {
             chatHistory.map((message, i) => (
               <div key={i}>
                 <strong>{message.role}</strong>
-                <p>{currentTime}</p>
+                <p>{message.time}</p>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                   {message.content}
                 </ReactMarkdown>
