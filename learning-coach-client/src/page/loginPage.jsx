@@ -9,7 +9,7 @@ export default function LoginPage() {
   const navigate = useNavigate();
 
   async function handleLogin() {
-    var result = await fetch("http://localhost:5138/api/auth/login", {
+    var result = await fetch("/api/auth/login", {
       method: "Post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -21,7 +21,7 @@ export default function LoginPage() {
       var data = await result.json();
       //store token
       localStorage.setItem("token", data.message);
-      navigate("/");
+      navigate("/homePage");
     } else {
       setErorMes("Invalid Email or password");
     }
@@ -41,7 +41,7 @@ export default function LoginPage() {
       />
       <p>Password</p>
       <input
-        type="text"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

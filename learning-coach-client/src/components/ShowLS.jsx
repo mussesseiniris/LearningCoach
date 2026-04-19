@@ -15,7 +15,7 @@ function ShowLS({ refresh }) {
       if (!subjectId) return;
       try {
         var result = await fetch(
-          "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
+          "/api/LearningSession?subjectId=" + subjectId,
           {
             method: "Get",
             headers: {
@@ -42,7 +42,7 @@ function ShowLS({ refresh }) {
   useEffect(() => {
     async function fetchSubject() {
       try {
-        var subres = await fetch("http://localhost:5138/api/Subject", {
+        var subres = await fetch("/api/Subject", {
           method: "Get",
           headers: {
             Authorization: `bearer ${token}`,

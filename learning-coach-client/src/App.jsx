@@ -6,7 +6,7 @@ import CreateSubject from "./components/CreateSubject";
 import ShowSubjects from "./components/ShowSubjects";
 import CreateLearningSessions from "./components/CreateLearningSessions";
 import ShowLS from "./components/ShowLS";
-import ShowSche from "./components/showSche";
+import ShowSche from "./components/ShowSche";
 import remarkGfm from "remark-gfm";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -37,7 +37,7 @@ function App() {
 
   async function handleGetSubjects() {
     try {
-      var result = await fetch("http://localhost:5138/api/Subject", {
+      var result = await fetch("/api/Subject", {
         method: "Get",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ function App() {
     setChatHistory((prev) => [...prev, userMessage]);
 
     try {
-      const result = await fetch("http://localhost:5138/api/AI/ask", {
+      const result = await fetch("/api/AI/ask", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -94,7 +94,7 @@ function App() {
   return (
     <div className="HomePage">
       <div className="menu">
-        <h3>hi,{userName}</h3>
+        <h3>Hi,{userName}</h3>
         <button onClick={() => setShowCreateSub(!showCreateSub)}>
           +Create new Subject
         </button>

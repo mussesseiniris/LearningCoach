@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./loginPage.css";
+import "./RegisterPage.css";
 import { useNavigate } from "react-router-dom";
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const navigate = useNavigate();
 
   async function handleSignUp() {
-    var result = await fetch("http://localhost:5138/api/auth/register", {
+    var result = await fetch("/api/auth/register", {
       method: "Post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -27,8 +27,8 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="loginHome">
-    <div className="login">
+    <div className="RegisterHome">
+    <div className="Register">
       <h2>LEARNING COACH</h2>
       <h3>Sign up:)</h3>
       <p>Email</p>
@@ -48,7 +48,7 @@ export default function RegisterPage() {
       />
       <p>Password</p>
       <input
-        type="text"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />

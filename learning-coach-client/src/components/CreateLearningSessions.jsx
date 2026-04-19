@@ -14,7 +14,7 @@ function CreateLearningSessions({onCreated}) {
   useEffect(() => {
     async function fetchSubjects() {
       try {
-        const res = await fetch("http://localhost:5138/api/Subject",
+        const res = await fetch("/api/Subject",
           {
           headers: {
                     "Authorization": `bearer ${token}`
@@ -40,7 +40,7 @@ function CreateLearningSessions({onCreated}) {
     }
     const duration = (new Date(endTime) - new Date(startTime)) / 60000;
     try {
-      const result = await fetch("http://localhost:5138/api/LearningSession", {
+      const result = await fetch("/api/LearningSession", {
         method: "POST",
         headers: { "Authorization": `Bearer ${token}` ,
          "Content-Type": "application/json" },

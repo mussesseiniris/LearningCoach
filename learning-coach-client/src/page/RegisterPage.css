@@ -1,17 +1,17 @@
-.loginHome {
+.RegisterHome {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   width: 100%;
 }
-.login {
+.Register {
   display: flex;
   flex-direction: column;
   width: 300px;
   height: 400px;
   align-items: center;
-  background-color: antiquewhite;
+  background-color: rgba(247, 188, 250, 0.5);
   border-radius: 30px;
   padding: 90px;
   gap: 10px;
@@ -19,37 +19,38 @@
   position: relative;
 }
 
-.login button {
+.Register button {
   margin: 30px;
   width: 90%;
+  background-color: rgb(128, 119, 171);
 }
 
-.login input {
+.Register input {
   margin: 30px;
   width: 90%;
   margin: 0;
   border-radius: 8px;
   border: none;
-  background-color: var(--accent);
+  background-color: rgba(250, 225, 249, 0.8);
   padding: 3px 0;
 }
 
-.login h3 {
-  color: rgb(185, 175, 230);
+.Register h3 {
+  color: rgb(92, 86, 121);
   font-size: 20px;
 }
 
-.login h2 {
+.Register h2 {
   font-family: "dotFont";
   color: var(--accent);
   font-size: 25px;
 }
 
-.login p {
+.Register p {
   width: 90%;
   margin: 0;
   padding: 0;
-  color: rgb(185, 175, 230);
+  color: rgb(128, 119, 171);
   text-align: start;
 }
 
@@ -64,10 +65,10 @@
 }
 .signUp button {
   flex: 1;
-  background-color: rgba(185, 175, 230, 0.5);
+  background-color: rgba(185, 175, 230, 0.8);
 }
 
-.login .setError {
+.Register .setError {
   background-color: rgba(251, 171, 0, 0.2);
   padding: 4px 0;
   color: rgb(105, 16, 16);
@@ -77,16 +78,4 @@
   text-align: center;
   width: 90%;
 }
-/* .login::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 80%;
-    height: 80%;
-    border: 3px solid white;
-    border-radius: 30px;
-    transform: rotate(0); 
-    z-index: +1;  
-    padding: 40px;
-}  */
+

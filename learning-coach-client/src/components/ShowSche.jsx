@@ -12,7 +12,7 @@ const token = localStorage.getItem("token");
   async function handleGetLS() {
     try {
       var result = await fetch(
-        "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
+        "/api/LearningSession?subjectId=" + subjectId,
         {
           method: "Get",
           headers: {
