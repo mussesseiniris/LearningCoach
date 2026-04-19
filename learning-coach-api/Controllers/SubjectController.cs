@@ -22,13 +22,14 @@ private readonly AppDbContext _context;
         
     }
     /// <summary>
-    /// Gets a list of subjects from the database.
+    /// Gets a list of subjects from the database based on the userId.
     /// </summary>
     /// <returns></returns>
     [HttpGet]
     public async Task<ActionResult<List<Subject>>> GetSubjects()
     {
-        var subjects = await _context.Subjects.ToListAsync();
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var subjects =await _context.Subjects.Where(s => s.UserId == userId).ToListAsync();
         return subjects;
     }
     

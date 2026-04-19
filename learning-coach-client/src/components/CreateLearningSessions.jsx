@@ -17,7 +17,7 @@ function CreateLearningSessions({onCreated}) {
         const res = await fetch("http://localhost:5138/api/Subject",
           {
           headers: {
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `bearer ${token}`
                 }
           }
         );

@@ -40,9 +40,7 @@ function App() {
           "Content-Type": "application/json",
         },
       });
-      console.log("status:", result.status);
       var data = await result.json();
-      console.log("subjects data:", data);
       setSubjects(data);
     } catch (error) {
       console.error(error);

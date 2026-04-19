@@ -28,7 +28,8 @@ public class LearningSessionController : ControllerBase
     public async Task<ActionResult<List<LearningSession>>> GetLearningSession(int? subjectId)
     {
         // var LearningSessions = await _context.LearningSessions.ToListAsync();
-        var LearningSessions = await _context.LearningSessions.Where(ls => ls.SubjectId == subjectId).ToListAsync();
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var LearningSessions = await _context.LearningSessions.Where(ls => ls.SubjectId == subjectId && ls.UserId==userId).ToListAsync();
         return LearningSessions;
     }
 
@@ -40,6 +41,8 @@ public class LearningSessionController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<LearningSession>> AddLearningSession(LearningSession learningSession)
     {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        learningSession.UserId = userId;
         _context.LearningSessions.Add(learningSession);
         await _context.SaveChangesAsync();
         return Ok(learningSession);

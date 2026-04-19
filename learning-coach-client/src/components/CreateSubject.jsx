@@ -19,7 +19,7 @@ function CreateSubject({onCreated}) {
     try {
       const result = await fetch("http://localhost:5138/api/Subject", {
         method: "POST",
-        headers: { "Authorization":`Bearer ${token}`,
+        headers: { "Authorization":`bearer ${token}`,
           "Content-Type": "application/json" },
         body: JSON.stringify({
           name: subject,

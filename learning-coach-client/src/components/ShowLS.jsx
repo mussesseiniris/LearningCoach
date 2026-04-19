@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 // Displays learning sessions filtered by subject.
 // Fetches subjects for the dropdown and sessions based on selected subjectId.
-function ShowLS({refresh}) {
+function ShowLS({ refresh }) {
   const [learningSessions, setLearningSessions] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [subjectId, setSubjectId] = useState(0);
@@ -12,6 +12,7 @@ function ShowLS({refresh}) {
   // Fetch learning sessions whenever subjectId changes
   useEffect(() => {
     async function handleGetLS() {
+      if (!subjectId) return;
       try {
         var result = await fetch(
           "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
@@ -35,7 +36,7 @@ function ShowLS({refresh}) {
     }
 
     handleGetLS();
-  }, [subjectId,refresh]);
+  }, [subjectId, refresh]);
 
   // Fetch all subjects once on mount for the dropdown
   useEffect(() => {
@@ -66,7 +67,7 @@ function ShowLS({refresh}) {
 
       {/* Dropdown to select a subject */}
       <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)}>
-        <option>Select a subject</option>
+        <option value="">Select a subject</option>
         {subjects.map((sub, index) => (
           <option value={sub.id} key={sub.id}>
             {index + 1}.{sub.name}
