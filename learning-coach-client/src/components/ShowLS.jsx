@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 
 // Displays learning sessions filtered by subject.
 // Fetches subjects for the dropdown and sessions based on selected subjectId.
-function ShowLS() {
+function ShowLS({refresh}) {
   const [learningSessions, setLearningSessions] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [subjectId, setSubjectId] = useState(0);
   const [displayCount, setDisplayCount] = useState(3);
-const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   // Fetch learning sessions whenever subjectId changes
   useEffect(() => {
     async function handleGetLS() {
@@ -17,10 +17,16 @@ const token = localStorage.getItem("token");
           "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
           {
             method: "Get",
-            headers: { "Authorization":`bearer${token}`,
-              "Content-Type": "application/json" },
+            headers: {
+              Authorization: `bearer ${token}`,
+              "Content-Type": "application/json",
+            },
           },
         );
+        if (!result.ok) {
+          console.error("Unauthorized or error");
+          return;
+        }
         var data = await result.json();
         setLearningSessions(data);
       } catch (error) {
@@ -29,7 +35,7 @@ const token = localStorage.getItem("token");
     }
 
     handleGetLS();
-  }, [subjectId]);
+  }, [subjectId,refresh]);
 
   // Fetch all subjects once on mount for the dropdown
   useEffect(() => {
@@ -38,8 +44,9 @@ const token = localStorage.getItem("token");
         var subres = await fetch("http://localhost:5138/api/Subject", {
           method: "Get",
           headers: {
-            "Authorization":`bearer ${token}`,
-             "Content-Type": "application/json" },
+            Authorization: `bearer ${token}`,
+            "Content-Type": "application/json",
+          },
         });
         var subdata = await subres.json();
         setSubjects(subdata);

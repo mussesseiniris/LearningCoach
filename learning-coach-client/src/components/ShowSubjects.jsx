@@ -10,7 +10,7 @@ function ShowSubjects({subjects}) {
      
       {/* Show subjects */}
       {subjects.map((subject, index) => (
-        <div key={subject.Id} className="subject-card">
+        <div key={subject.id} className="subject-card">
           <div id="subjectTitle">
             {index + 1}.Subject: {subject.name}
           </div>

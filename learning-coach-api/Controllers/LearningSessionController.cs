@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using LearningCoachAPI.Data;
 using LearningCoachAPI.Models;
 using Microsoft.AspNetCore.Authorization;

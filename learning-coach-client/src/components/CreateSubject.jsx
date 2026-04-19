@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./CreateSubject.css";
-function CreateSubject() {
+function CreateSubject({onCreated}) {
   // const [timeStart, setTimeStart] = useState("");
   // const [timeEnd, setTimeEnd] = useState("");
   const [subject, setSubject] = useState("");
@@ -8,6 +8,8 @@ function CreateSubject() {
   const [goal, setGoal] = useState("");
   const [priority, setPriority] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  const token = localStorage.getItem("token");
 
   async function handleCreateSubject() {
     if (!subject || !deadline || !priority || !duration) {
@@ -30,6 +32,7 @@ function CreateSubject() {
       });
       if (result.ok) {
         alert("Subject created!");
+        onCreated();
       }
     } catch (error) {
       console.error(error);

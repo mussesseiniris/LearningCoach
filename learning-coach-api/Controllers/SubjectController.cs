@@ -42,6 +42,7 @@ public async Task<ActionResult<Subject>> CreateSubject (Subject subject)
 {
     var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
     subject.Id = 0;
+    subject.UserId = userId;
     subject.CreatedAt = DateTime.UtcNow;
     Console.WriteLine($"UserId received: {subject.UserId}");
     _context.Subjects.Add(subject);

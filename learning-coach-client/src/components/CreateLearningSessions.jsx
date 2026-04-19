@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./CreateLearningSessions.css";
 
 //  Handle creating new learning sessions.
-function CreateLearningSessions() {
+function CreateLearningSessions({onCreated}) {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [subjects, setSubjects] = useState([]);
@@ -55,6 +55,7 @@ function CreateLearningSessions() {
       });
       if (result.ok) {
         alert("Learning Session created!");
+        onCreated();
       }
     } catch (error) {
       console.error(error);

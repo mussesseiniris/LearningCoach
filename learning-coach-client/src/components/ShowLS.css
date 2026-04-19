@@ -6,6 +6,8 @@
   align-items: center;
   flex-direction: column;
   border-radius: 10px;
+  /* max-height: 80vh;   */
+  overflow-y: auto;   
 
 }
 .ShowLearningSessions button{
@@ -61,7 +63,9 @@ color: rgb(52, 101, 157);
   flex-direction: column;
   border-radius: 10px;
   padding: 10px 0 10px 0; 
-  overflow: visible;       
+  overflow: visible;    
+  /* max-height: 80vh;   */
+  overflow-y: auto;     
 }
 
 .ShowSche button {

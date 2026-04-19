@@ -8,6 +8,7 @@ import CreateLearningSessions from "./components/CreateLearningSessions";
 import ShowLS from "./components/ShowLS";
 import ShowSche from "./components/showSche";
 import remarkGfm from "remark-gfm";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -21,10 +22,12 @@ function App() {
   const [showSche, setShowSche] = useState(false);
   const [subjects, setSubjects] = useState([]);
   const [learningSessions, setLs] = useState([]);
+  const [refresh, setRefresh] = useState(0);
 
   const now = new Date();
   const currentTime = now.toLocaleString();
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   //Fetch all subjects once on mount.
 
@@ -33,11 +36,13 @@ function App() {
       var result = await fetch("http://localhost:5138/api/Subject", {
         method: "Get",
         headers: {
-           "Authorization": `Bearer ${token}` ,
-            "Content-Type": "application/json" },
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
-
+      console.log("status:", result.status);
       var data = await result.json();
+      console.log("subjects data:", data);
       setSubjects(data);
     } catch (error) {
       console.error(error);
@@ -61,7 +66,7 @@ function App() {
       const result = await fetch("http://localhost:5138/api/AI/ask", {
         method: "POST",
         headers: {
-           "Authorization": `Bearer ${token}` ,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(textTosend),
@@ -77,6 +82,11 @@ function App() {
       console.error("Error in handleSend:", error);
       setStatus("Failed to send message. Please try again.");
     }
+  }
+
+  function handleSignout() {
+    localStorage.removeItem("token");
+    navigate("/login");
   }
 
   return (
@@ -95,11 +105,14 @@ function App() {
           Show Learning sessions
         </button>
         <button onClick={() => setShowSche(!showSche)}>Create Schedule</button>
+        <button onClick={() => handleSignout()}>Sign Out</button>
       </div>
-      {showCreateSub && <CreateSubject />}
+      {showCreateSub && <CreateSubject onCreated={handleGetSubjects} />}
       {showShowSub && <ShowSubjects subjects={subjects} />}
-      {showCreateLS && <CreateLearningSessions />}
-      {showLS && <ShowLS />}
+      {showCreateLS && (
+        <CreateLearningSessions onCreated={() => setRefresh((r) => r + 1)} />
+      )}
+      {showLS && <ShowLS refresh={refresh} />}
       {showSche && <ShowSche onGenerate={handleSend} subjects={subjects} />}
 
       <div className="app">
@@ -132,7 +145,7 @@ function App() {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Asking your learning coach"
           />
-          <button onClick={()=>handleSend()}>Send</button>
+          <button onClick={() => handleSend()}>Send</button>
         </div>
       </div>
     </div>
