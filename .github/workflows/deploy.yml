@@ -38,14 +38,15 @@ jobs:
 
       - name: Export image to tar
         run: |
-          docker save learning-coach:${{ github.sha }} -o image.tar
+          docker save learning-coach:${{ github.sha }} | gzip > image.tar.gz
+          echo "Image size: $(du -sh image.tar.gz)"
 
       - name: Upload image to Tenants
         id: upload
         run: |
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
             -X POST "https://tenants.zhefuz.link/api/v1/docker-images" \
-            -F "file=@image.tar")
+            -F "file=@image.tar.gz")
           echo "response=$RESPONSE"
           IMAGE_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['id'])")
           echo "image_id=$IMAGE_ID" >> $GITHUB_OUTPUT
