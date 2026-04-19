@@ -17,7 +17,8 @@ function CreateSubject() {
     try {
       const result = await fetch("http://localhost:5138/api/Subject", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Authorization":`Bearer ${token}`,
+          "Content-Type": "application/json" },
         body: JSON.stringify({
           name: subject,
           deadline: new Date(deadline).toISOString(),

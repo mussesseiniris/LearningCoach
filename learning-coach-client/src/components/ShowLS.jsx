@@ -8,7 +8,7 @@ function ShowLS() {
   const [subjects, setSubjects] = useState([]);
   const [subjectId, setSubjectId] = useState(0);
   const [displayCount, setDisplayCount] = useState(3);
-
+const token = localStorage.getItem("token");
   // Fetch learning sessions whenever subjectId changes
   useEffect(() => {
     async function handleGetLS() {
@@ -17,7 +17,8 @@ function ShowLS() {
           "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
           {
             method: "Get",
-            headers: { "Content-Type": "application/json" },
+            headers: { "Authorization":`bearer${token}`,
+              "Content-Type": "application/json" },
           },
         );
         var data = await result.json();
@@ -36,7 +37,9 @@ function ShowLS() {
       try {
         var subres = await fetch("http://localhost:5138/api/Subject", {
           method: "Get",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Authorization":`bearer ${token}`,
+             "Content-Type": "application/json" },
         });
         var subdata = await subres.json();
         setSubjects(subdata);

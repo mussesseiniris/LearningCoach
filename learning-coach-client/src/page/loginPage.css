@@ -1,0 +1,85 @@
+.login {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 400px;
+  align-items: center;
+  background-color: antiquewhite;
+  border-radius: 30px;
+  padding: 90px;
+  gap: 10px;
+  border: 2px solid rgb(234, 225, 225);
+  position: relative;
+}
+
+.login button {
+  margin: 30px;
+  width: 90%;
+}
+
+.login input {
+  margin: 30px;
+  width: 90%;
+  margin: 0;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--accent);
+  padding:3px 0;
+}
+
+.login h3 {
+  color: rgb(185, 175, 230);
+  font-size: 20px;
+}
+
+.login h2 {
+  font-family: "dotFont";
+  color: var(--accent);
+  font-size: 25px;
+}
+
+.login p {
+  width: 90%;
+  margin: 0;
+  padding: 0;
+  color: rgb(185, 175, 230);
+  text-align: start;
+}
+
+.signUp {
+  display: flex;
+  width: 90%;
+  align-items: center;
+}
+.signUp p {
+  font-size: 15px;
+  flex: 2;
+}
+.signUp button {
+  flex: 1;
+  background-color: rgba(185, 175, 230, 0.5);
+}
+
+.login .setError {
+  background-color: rgba(251, 171, 0, 0.2);
+  padding: 4px 0;
+  color: rgb(105, 16, 16);
+  font-size: 14px;
+  margin: 0;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+}
+/* .login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
+    border: 3px solid white;
+    border-radius: 30px;
+    transform: rotate(0); 
+    z-index: +1;  
+    padding: 40px;
+}  */

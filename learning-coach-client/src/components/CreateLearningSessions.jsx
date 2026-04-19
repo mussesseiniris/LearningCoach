@@ -9,11 +9,18 @@ function CreateLearningSessions() {
   const [subjectId, setSubjectId] = useState(0);
   const [note, setNote] = useState("");
 
+  const token = localStorage.getItem("token");
   //Fetch all subjects once on mount.
   useEffect(() => {
     async function fetchSubjects() {
       try {
-        const res = await fetch("http://localhost:5138/api/Subject");
+        const res = await fetch("http://localhost:5138/api/Subject",
+          {
+          headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+          }
+        );
 
         const data = await res.json();
 
@@ -35,7 +42,8 @@ function CreateLearningSessions() {
     try {
       const result = await fetch("http://localhost:5138/api/LearningSession", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Authorization": `Bearer ${token}` ,
+         "Content-Type": "application/json" },
         body: JSON.stringify({
           UserId: 1,
           StartTime: startTime + ":00Z",

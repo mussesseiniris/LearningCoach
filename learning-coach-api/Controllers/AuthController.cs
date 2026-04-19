@@ -3,6 +3,7 @@ using LearningCoachAPI.Data;
 using LearningCoachAPI.DTO;
 using LearningCoachAPI.Models;
 using LearningCoachAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace LearningCoachAPI.Controllers;
 /// Handles user authentication including registration and login.
 /// Returns a JWT token on successful login.
 /// </summary>
+[AllowAnonymous]
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase

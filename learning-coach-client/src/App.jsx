@@ -24,6 +24,7 @@ function App() {
 
   const now = new Date();
   const currentTime = now.toLocaleString();
+  const token = localStorage.getItem("token");
 
   //Fetch all subjects once on mount.
 
@@ -31,7 +32,9 @@ function App() {
     try {
       var result = await fetch("http://localhost:5138/api/Subject", {
         method: "Get",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+           "Authorization": `Bearer ${token}` ,
+            "Content-Type": "application/json" },
       });
 
       var data = await result.json();
@@ -58,6 +61,7 @@ function App() {
       const result = await fetch("http://localhost:5138/api/AI/ask", {
         method: "POST",
         headers: {
+           "Authorization": `Bearer ${token}` ,
           "Content-Type": "application/json",
         },
         body: JSON.stringify(textTosend),

@@ -6,7 +6,7 @@ export default function ShowSche({ onGenerate, subjects }) {
   const [learningSessions, setLSs] = useState([]);
   const sysPrompt =
     "Hi Claude! Could you create learning timelines? Please create a learning timeline. Use GFM task list format for each day, like this: - [ ] Day 1 - Activity name   - [ ] Day 2 - Activity name. If you need more information from me, ask me 1-2 key questions right away. If you think I should give you more context or upload anything to help you do a better job, let me know. Use any tools you have access to—like Google Drive, web search, etc.—if they'll help.If it makes sense, create something we can look at together—like a visual, a checklist, or something interactive. Thanks for your help!";
-
+const token = localStorage.getItem("token");
   // Fetch learning sessions whenever subjectId changes
 
   async function handleGetLS() {
@@ -15,7 +15,9 @@ export default function ShowSche({ onGenerate, subjects }) {
         "http://localhost:5138/api/LearningSession?subjectId=" + subjectId,
         {
           method: "Get",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Authorization":`bearer ${token}`,
+             "Content-Type": "application/json" },
         },
       );
       var data = await result.json();
