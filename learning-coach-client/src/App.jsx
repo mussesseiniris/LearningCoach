@@ -9,6 +9,7 @@ import ShowLS from "./components/ShowLS";
 import ShowSche from "./components/showSche";
 import remarkGfm from "remark-gfm";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   const [message, setMessage] = useState("");
@@ -28,6 +29,9 @@ function App() {
   const currentTime = now.toLocaleString();
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const decoded = token ? jwtDecode(token) : null;
+  const userName = decoded?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+  console.log(decoded);  
 
   //Fetch all subjects once on mount.
 
@@ -90,6 +94,7 @@ function App() {
   return (
     <div className="HomePage">
       <div className="menu">
+        <h3>hi,{userName}</h3>
         <button onClick={() => setShowCreateSub(!showCreateSub)}>
           +Create new Subject
         </button>
