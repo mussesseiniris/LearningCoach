@@ -34,7 +34,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --platform=linux/amd64 -t learning-coach:${{ github.sha }} .
+          docker build --platform=linux/amd64 --load -t learning-coach:${{ github.sha }} .
 
       - name: Export image to tar
         run: |
