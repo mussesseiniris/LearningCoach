@@ -1,0 +1,110 @@
+name: Deploy to Tenants
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Generate production config
+        run: |
+          cat > learning-coach-api/appsettings.Production.json << EOF
+          {
+            "ConnectionStrings": {
+              "DefaultConnection": "${{ secrets.DB_CONNECTION_STRING }}"
+            },
+            "Anthropic": {
+              "ApiKey": "${{ secrets.ANTHROPIC_API_KEY }}"
+            },
+            "Jwt": {
+              "Secret": "${{ secrets.JWT_SECRET }}"
+            },
+            "AllowedHosts": "*"
+          }
+          EOF
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker image
+        run: |
+          docker build --platform=linux/amd64 -t learning-coach:${{ github.sha }} .
+
+      - name: Export image to tar
+        run: |
+          docker save learning-coach:${{ github.sha }} -o image.tar
+
+      - name: Upload image to Tenants
+        id: upload
+        run: |
+          RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            -X POST "https://tenants.zhefuz.link/api/v1/docker-images" \
+            -F "file=@image.tar")
+          echo "response=$RESPONSE"
+          IMAGE_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['id'])")
+          echo "image_id=$IMAGE_ID" >> $GITHUB_OUTPUT
+
+      - name: Get current server name
+        id: old_server
+        run: |
+          RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            "https://tenants.zhefuz.link/api/v1/sites/learning-coach")
+          SERVER_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['managedServerId'])")
+          SERVERS=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            "https://tenants.zhefuz.link/api/v1/managed-servers")
+          OLD_NAME=$(echo $SERVERS | python3 -c "
+          import sys,json
+          data = json.load(sys.stdin)['data']
+          match = next((s['name'] for s in data if s['id'] == '$SERVER_ID'), '')
+          print(match)
+          ")
+          echo "name=$OLD_NAME" >> $GITHUB_OUTPUT
+
+      - name: Create new server
+        id: new_server
+        run: |
+          SHA="${{ github.sha }}"
+          SERVER_NAME="lc-${SHA:0:7}"
+          RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            -X POST "https://tenants.zhefuz.link/api/v1/managed-servers" \
+            -H "Content-Type: application/json" \
+            -d "{\"name\":\"$SERVER_NAME\",\"dockerImageId\":\"${{ steps.upload.outputs.image_id }}\"}")
+          echo "name=$SERVER_NAME" >> $GITHUB_OUTPUT
+
+      - name: Wait for server to be running
+        run: |
+          SERVER_NAME="${{ steps.new_server.outputs.name }}"
+          for i in $(seq 1 30); do
+            STATUS=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+              "https://tenants.zhefuz.link/api/v1/managed-servers/$SERVER_NAME" \
+              | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['status'])")
+            echo "Status: $STATUS"
+            if [ "$STATUS" = "running" ]; then exit 0; fi
+            if [ "$STATUS" = "failed" ]; then
+              curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+                "https://tenants.zhefuz.link/api/v1/managed-servers/$SERVER_NAME/logs"
+              exit 1
+            fi
+            sleep 10
+          done
+          echo "Timeout waiting for server"
+          exit 1
+
+      - name: Rebind site to new server
+        run: |
+          curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            -X PUT "https://tenants.zhefuz.link/api/v1/sites/learning-coach/managed-server" \
+            -H "Content-Type: application/json" \
+            -d "{\"managedServerName\":\"${{ steps.new_server.outputs.name }}\"}"
+
+      - name: Delete old server
+        if: steps.old_server.outputs.name != ''
+        run: |
+          curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            -X DELETE "https://tenants.zhefuz.link/api/v1/managed-servers/${{ steps.old_server.outputs.name }}"
