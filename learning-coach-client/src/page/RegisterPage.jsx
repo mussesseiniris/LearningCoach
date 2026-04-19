@@ -1,27 +1,26 @@
 import { useState } from "react";
 import "./loginPage.css";
 import { useNavigate } from "react-router-dom";
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErorMes] = useState("");
+  const [userName, setUserName] = useState("");
 
   const navigate = useNavigate();
 
-  async function handleLogin() {
-    var result = await fetch("http://localhost:5138/api/auth/login", {
+  async function handleSignUp() {
+    var result = await fetch("http://localhost:5138/api/auth/register", {
       method: "Post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         email: email,
+        name:userName,
         password: password,
       }),
     });
     if (result.ok) {
-      var data = await result.json();
-      //store token
-      localStorage.setItem("token", data.message);
-      navigate("/");
+     navigate("/login");
     } else {
       setErorMes("Invalid Email or password");
     }
@@ -31,13 +30,21 @@ export default function LoginPage() {
     <div className="loginHome">
     <div className="login">
       <h2>LEARNING COACH</h2>
-      <h3>Login to your account :)</h3>
+      <h3>Sign up:)</h3>
       <p>Email</p>
       <input
         type="text"
         placeholder=""
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+      />
+
+        <p>User Name</p>
+      <input
+        type="text"
+        placeholder=""
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
       />
       <p>Password</p>
       <input
@@ -46,12 +53,9 @@ export default function LoginPage() {
         onChange={(e) => setPassword(e.target.value)}
       />
       {errorMessage && <p className="setError">{errorMessage}</p>}
-      <button onClick={() => handleLogin()}>Log In</button>
+      <button onClick={() => handleSignUp()}>Sign up</button>
 
-      <div className="signUp">
-        <p>Not registered yet?</p>
-        <button onClick={()=>navigate("/signUp")}>Sign Up :)</button>
-      </div>
     </div>
-    </div>)
+    </div>
+  );
 }
