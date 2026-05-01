@@ -56,6 +56,7 @@ jobs:
         run: |
           RESPONSE=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
             "https://tenants.zhefuz.link/api/v1/sites/learning-coach")
+          echo "site response=$RESPONSE"
           SERVER_ID=$(echo $RESPONSE | python3 -c "import sys,json; print(json.load(sys.stdin)['data']['managedServerId'])")
           SERVERS=$(curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
             "https://tenants.zhefuz.link/api/v1/managed-servers")
