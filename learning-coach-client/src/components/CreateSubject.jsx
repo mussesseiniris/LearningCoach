@@ -27,7 +27,6 @@ function CreateSubject({onCreated}) {
           goal: goal,
           duration: duration,
           priority: priority,
-          userId: 1,
         }),
       });
       if (result.ok) {

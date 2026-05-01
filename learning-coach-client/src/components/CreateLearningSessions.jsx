@@ -45,7 +45,6 @@ function CreateLearningSessions({onCreated}) {
         headers: { "Authorization": `Bearer ${token}` ,
          "Content-Type": "application/json" },
         body: JSON.stringify({
-          UserId: 1,
           StartTime: startTime + ":00Z",
           EndTime: endTime + ":00Z",
           Duration: duration,
