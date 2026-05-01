@@ -66,7 +66,14 @@ jobs:
           match = next((s['name'] for s in data if s['id'] == '$SERVER_ID'), '')
           print(match)
           ")
+          OLD_IMAGE_ID=$(echo $SERVERS | python3 -c "
+          import sys,json
+          data = json.load(sys.stdin)['data']
+          match = next((s['dockerImageId'] for s in data if s['id'] == '$SERVER_ID'), '')
+          print(match)
+          ")
           echo "name=$OLD_NAME" >> $GITHUB_OUTPUT
+          echo "image_id=$OLD_IMAGE_ID" >> $GITHUB_OUTPUT
 
       - name: Create new server
         id: new_server
@@ -110,3 +117,9 @@ jobs:
         run: |
           curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
             -X DELETE "https://tenants.zhefuz.link/api/v1/managed-servers/${{ steps.old_server.outputs.name }}"
+
+      - name: Delete old image
+        if: steps.old_server.outputs.image_id != ''
+        run: |
+          curl -s -H "Authorization: Bearer ${{ secrets.TENANTS_TOKEN }}" \
+            -X DELETE "https://tenants.zhefuz.link/api/v1/docker-images/${{ steps.old_server.outputs.image_id }}"
