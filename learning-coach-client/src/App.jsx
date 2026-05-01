@@ -6,7 +6,7 @@ import CreateSubject from "./components/CreateSubject";
 import ShowSubjects from "./components/ShowSubjects";
 import CreateLearningSessions from "./components/CreateLearningSessions";
 import ShowLS from "./components/ShowLS";
-import ShowSche from "./components/ShowSche";
+import ShowSche from "./components/showSche";
 import remarkGfm from "remark-gfm";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";

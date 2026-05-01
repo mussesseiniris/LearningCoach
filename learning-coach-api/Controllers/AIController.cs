@@ -32,15 +32,16 @@ public class AIController : ControllerBase
     [HttpPost("ask")]
     public async Task<ActionResult<string>> Ask([FromBody] string userMessage)
     {
-        var learningsessions = await _context.LearningSessions.Include(s=>s.Subject).ToListAsync();
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var learningsessions = await _context.LearningSessions.Where(s=>s.UserId==userId).Include(s=>s.Subject).ToListAsync();
         var sessionText = string.Join("\n",learningsessions.Select(s => $"Subject:{s.Subject.Name},Duration:{s.Duration},Note:{s.Note}"));
-        var subjects = await _context.Subjects.ToListAsync();
+        var subjects = await _context.Subjects.Where(s=>s.UserId==userId).ToListAsync();
         var subjectText = string.Join("\n",subjects.Select(s=>$"Subject:{s.Name},Duration:{s.Duration},Goal:{s.Goal}"));
         var systemPrompt = $"You are a strict and supportive learning coach. Based on the user's learning progress, create concise study plans and quiz the user on what they have learned.\n\nSubjects:\n{subjectText}\n\nLearning Sessions:\n{sessionText}";
-        var chatMessages = await _context.ChatMessages
+        var chatMessages = await _context.ChatMessages.Where(c=>c.UserID==userId)
             .OrderByDescending(m=>m.Time).Take(6).OrderBy(m=>m.Time).ToListAsync();
         var claudeResponse = await _claudeService.AskClaudeAsync(chatMessages,userMessage,systemPrompt);
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        // var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         _context.ChatMessages.Add(new ChatMessage
         {
            MessageRole = "user",
